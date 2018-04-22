@@ -5,6 +5,8 @@ let express = require('express');
 const app = express();
 const port = 1337;
 const router = require('./src/routes.js');
+let db = require('./src/db/db.js');
+
 app.use('/', router);
 
 app.listen(port, () => {
