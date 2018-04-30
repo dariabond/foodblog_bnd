@@ -1,5 +1,5 @@
 exports.up = function(knex, Promise) {
-  Promise.all([
+  return Promise.all([
       knex.schema.createTable('recipes', function(table) {
           table.increments('id').primary();
           table.string('title').notNull();
@@ -13,14 +13,14 @@ exports.up = function(knex, Promise) {
       knex.schema.createTable('categories', function(table) {
           table.increments('id').primary();
           table.string('name').notNull();
-          table.string('photo_url').notNull();
       }),
       
       knex.schema.createTable('recipes_categories', function(table) {
-          table.integer('recipe_id').primary()
+          table.increments('id').primary();
+          table.integer('recipe_id')
               .references('id')
               .inTable('recipes');
-          table.integer('category_id').primary()
+          table.integer('category_id')
               .references('id')
               .inTable('categories');
       }),
