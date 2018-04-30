@@ -6,10 +6,16 @@ let router = express.Router();
 let db = require('./db/db.js');
 
 //all recipes for feed, the newest first - and only the essential info
-router.get('/recipes', function (req, res) {
-    res.send([
-        {id: 1}, {id: 2}
-    ]);
+//also put the limit
+router.get('/recipes/feed', function (req, res) {
+    db.select('id', 'title', 'post_date', 'photo_url', 'tags', 'abstract').from('recipes')
+        .then((data) => {
+            if (!data || !data.length) {
+                res.status(404).end();
+            } else {
+                res.send(data);
+            }
+        });
 });
 
 //recipes by category
